@@ -10,9 +10,9 @@ namespace RumbleEnhancer
 		public const string PluginName = "RumbleEnhancer";
 
 		public string Name => PluginName;
-		public string Version => "1.0.2";
+		public string Version => "1.1.0";
 
-		private readonly string[] GameplaySceneNames = { "DefaultEnvironment", "BigMirrorEnvironment", "TriangleEnvironment", "NiceEnvironment" };
+		private readonly string[] GameplaySceneNames = { "Menu", "GameCore" };
 
 		public void OnApplicationStart()
 		{
