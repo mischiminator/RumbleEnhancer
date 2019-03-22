@@ -5,4 +5,5 @@ A couple months ago, a Beat Saber update reduced the vibration/rumble intensity 
 With my first mod, I decided to try and get that feeling back, and the result is this Rumble Enhancing plugin:
 
 Place the dll in the Plugins folder, launch a song, and enjoy!
-To modify settings, after launching at least 1 song, go to the UserData folder, and change the modprefs.ini file.
+
+You will find the Settings in the game settings and in the modprefs.ini file
