@@ -4,9 +4,69 @@
     <assembly>
       <name>UnityEngine.XRModule</name>
     </assembly>
+    <member name="T:UnityEngine.Experimental.IntegratedSubsystem">
+      <summary>
+        <para>An IntegratedSubsystem is initialized from an IntegratedSubsystemDescriptor for a given Subsystem (Example, Input, Environment, Display, etc.) and provides an interface to interact with that given IntegratedSubsystem until it is Destroyed. After an IntegratedSubsystem is created it can be Started or Stopped to turn on and off functionality (and preserve performance). The base type for IntegratedSubsystem only exposes this functionality; this class is designed to be a base class for derived classes that expose more functionality specific to a given IntegratedSubsystem.
+
+            Note: initializing a second IntegratedSubsystem from the same IntegratedSubsystemDescriptor will return a reference to the existing IntegratedSubsystem as only one IntegratedSubsystem is currently allowed for a single IntegratedSubsystem provider.
+            </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.IntegratedSubsystem.Destroy">
+      <summary>
+        <para>Destroys this instance of a subsystem.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.IntegratedSubsystem.Start">
+      <summary>
+        <para>Starts an instance of a subsystem.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.IntegratedSubsystem.Stop">
+      <summary>
+        <para>Stops an instance of a subsystem.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.IntegratedSubsystemDescriptor">
+      <summary>
+        <para>Information about a subsystem that can be queried before creating a subsystem instance.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.IntegratedSubsystemDescriptor.id">
+      <summary>
+        <para>A unique string that identifies the subsystem that this Descriptor can create.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Experimental.ISubsystem">
+      <summary>
+        <para>Interface implemented by both Subsystem and IntegratedSubsystem which provides control over the state of either.
+            </para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.ISubsystem.Destroy">
+      <summary>
+        <para>Destroys this instance of a subsystem.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.ISubsystem.Start">
+      <summary>
+        <para>Starts an instance of a subsystem.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.ISubsystem.Stop">
+      <summary>
+        <para>Stops an instance of a subsystem.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.Experimental.ISubsystemDescriptor">
+      <summary>
+        <para>A subsystem descriptor is metadata about a subsystem which can be inspected before loading / initializing a subsystem.
+            </para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.Experimental.Subsystem">
       <summary>
-        <para>An Subsystem is initialized from an SubsystemDescriptor for a given Subsystem (Example, Input, Environment, Display, etc.) and provides an interface to interact with that given Subsystem until it is Destroyed. After an Subsystem is created it can be Started or Stopped to turn on and off functionality (and preserve performance). The base type for Subsystem only exposes this functionality; this class is designed to be a base class for derived classes that expose more functionality specific to a given Subsystem.
+        <para>A Subsystem is initialized from a SubsystemDescriptor for a given Subsystem (Example, Input, Environment, Display, etc.) and provides an interface to interact with that given Subsystem until it is Destroyed. After a Subsystem is created it can be Started or Stopped to turn on and off functionality (and preserve performance). The base type for Subsystem only exposes this functionality; this class is designed to be a base class for derived classes that expose more functionality specific to a given Subsystem.
 
             Note: initializing a second Subsystem from the same SubsystemDescriptor will return a reference to the existing Subsystem as only one Subsystem is currently allowed for a single Subsystem provider.
             </para>
@@ -27,18 +87,20 @@
         <para>Stops an instance of a subsystem.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.Experimental.SubsystemDescriptor`1">
+    <member name="T:UnityEngine.Experimental.SubsystemDescriptor">
       <summary>
         <para>Information about a subsystem that can be queried before creating a subsystem instance.</para>
       </summary>
     </member>
-    <member name="M:UnityEngine.Experimental.SubsystemDescriptor_1.Create">
+    <member name="P:UnityEngine.Experimental.SubsystemDescriptor.id">
       <summary>
-        <para>Creates an Subsystem from this descriptor.</para>
+        <para>A unique string that identifies the subsystem that this Descriptor can create.</para>
       </summary>
-      <returns>
-        <para>Instance of subsystem.</para>
-      </returns>
+    </member>
+    <member name="P:UnityEngine.Experimental.SubsystemDescriptor.subsystemImplementationType">
+      <summary>
+        <para>The System.Type of the subsystem implementation associated with this descriptor.</para>
+      </summary>
     </member>
     <member name="T:UnityEngine.Experimental.SubsystemManager">
       <summary>
@@ -138,6 +200,141 @@
     <member name="P:UnityEngine.Experimental.XR.FrameReceivedEventArgs.CameraSubsystem">
       <summary>
         <para>Reference to the XRCameraSubsystem associated with this event.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.MeshChangeState">
+      <summary>
+        <para>The state of a tracked mesh since the last query.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshChangeState.Added">
+      <summary>
+        <para>The mesh has been added since the last call to XRMeshSubsystem.TryGetMeshInfos.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshChangeState.Removed">
+      <summary>
+        <para>The mesh has been removed since the last call to XRMeshSubsystem.TryGetMeshInfos.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshChangeState.Unchanged">
+      <summary>
+        <para>The mesh has not changed since the last call to XRMeshSubsystem.TryGetMeshInfos.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshChangeState.Updated">
+      <summary>
+        <para>The mesh has been updated since the last call to XRMeshSubsystem.TryGetMeshInfos.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.MeshGenerationResult">
+      <summary>
+        <para>Contains event information related to a generated mesh.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshGenerationResult.Attributes">
+      <summary>
+        <para>The MeshVertexAttributes that were written to the MeshGenerationResult.Mesh.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshGenerationResult.Mesh">
+      <summary>
+        <para>If the generation was successful, data has been written to this Mesh.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshGenerationResult.MeshCollider">
+      <summary>
+        <para>If the generation was successful, physics data has been written to this MeshCollider.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshGenerationResult.MeshId">
+      <summary>
+        <para>The TrackableId of the tracked mesh that was generated.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshGenerationResult.Status">
+      <summary>
+        <para>The MeshGenerationStatus of the mesh generation task.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.MeshGenerationStatus">
+      <summary>
+        <para>The status of a XRMeshSubsystem.GenerateMeshAsync.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshGenerationStatus.Canceled">
+      <summary>
+        <para>The mesh generation was canceled.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshGenerationStatus.GenerationAlreadyInProgress">
+      <summary>
+        <para>The XRMeshSubsystem was already generating the requested mesh.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshGenerationStatus.InvalidMeshId">
+      <summary>
+        <para>The mesh generation failed because the mesh does not exist.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshGenerationStatus.Success">
+      <summary>
+        <para>The mesh generation was successful.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshGenerationStatus.UnknownError">
+      <summary>
+        <para>The mesh generation failed for unknown reasons.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.MeshInfo">
+      <summary>
+        <para>Contains state information related to a tracked mesh.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshInfo.ChangeState">
+      <summary>
+        <para>The change state (e.g., Added, Removed) of the tracked mesh.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshInfo.MeshId">
+      <summary>
+        <para>The TrackableId of the tracked mesh.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Experimental.XR.MeshInfo.PriorityHint">
+      <summary>
+        <para>A hint that can be used to determine when this mesh should be processed.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.MeshVertexAttributes">
+      <summary>
+        <para>A set of vertex attributes.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshVertexAttributes.Colors">
+      <summary>
+        <para>Vertex normals</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshVertexAttributes.None">
+      <summary>
+        <para>No vertex attributes</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshVertexAttributes.Normals">
+      <summary>
+        <para>Vertex normals</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshVertexAttributes.Tangents">
+      <summary>
+        <para>Vertex tangents</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Experimental.XR.MeshVertexAttributes.UVs">
+      <summary>
+        <para>Vertex UVs</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Experimental.XR.PlaneAddedEventArgs">
@@ -500,6 +697,16 @@
         <para>When true, XRDepthSubsystem will provide list of feature points detected so far.</para>
       </summary>
     </member>
+    <member name="T:UnityEngine.Experimental.XR.XRDisplaySubsystem">
+      <summary>
+        <para>An XRDisplaySubsystem controls rendering to a head tracked display.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.XRDisplaySubsystemDescriptor">
+      <summary>
+        <para>Class providing information about XRDisplaySubsystem registration.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.Experimental.XR.XRInputSubsystem">
       <summary>
         <para>XRInputSubsystem
@@ -514,6 +721,35 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
     <member name="P:UnityEngine.Experimental.XR.XRInputSubsystemDescriptor.disablesLegacyInput">
       <summary>
         <para>When true, will suppress legacy support for Daydream, Oculus, OpenVR, and Windows MR built directly into the Unity runtime from generating input. This is useful when adding an XRInputSubsystem that supports these devices.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.XRMeshSubsystem">
+      <summary>
+        <para>Allows external systems to provide dynamic meshes to Unity.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.Experimental.XR.XRMeshSubsystem.GenerateMeshAsync(UnityEngine.Experimental.XR.TrackableId,UnityEngine.Mesh,UnityEngine.MeshCollider,UnityEngine.Experimental.XR.MeshVertexAttributes,System.Action`1&lt;UnityEngine.Experimental.XR.MeshGenerationResult&gt;)">
+      <summary>
+        <para>Request that the mesh with TrackableId meshId gets generated. onMeshGenerationComplete is called when generation is complete.</para>
+      </summary>
+      <param name="meshId">The TrackableId of the mesh you wish to generate.</param>
+      <param name="mesh">The Mesh to write the results into.</param>
+      <param name="meshCollider">(Optional) The MeshCollider to populate with physics data. This may be null.</param>
+      <param name="attributes">The vertex attributes you'd like to use.</param>
+      <param name="onMeshGenerationComplete">The delegate to invoke when the generation completes.</param>
+    </member>
+    <member name="M:UnityEngine.Experimental.XR.XRMeshSubsystem.TryGetMeshInfos(System.Collections.Generic.List`1&lt;UnityEngine.Experimental.XR.MeshInfo&gt;)">
+      <summary>
+        <para>Get information about every mesh tracked by the system.</para>
+      </summary>
+      <param name="meshInfosOut">A List of MeshInfos to be filled. Passing null will throw an ArgumentNullException.</param>
+      <returns>
+        <para>True if the List was populated.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.Experimental.XR.XRMeshSubsystemDescriptor">
+      <summary>
+        <para>Information about an XRMeshSubsystem.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.Experimental.XR.XRPlaneSubsystem">
@@ -727,6 +963,90 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
         <para>The XR module contains the VR and AR related platform support functionality.</para>
       </summary>
     </member>
+    <member name="T:UnityEngine.XR.HapticCapabilities">
+      <summary>
+        <para>Describes the haptic capabilities of the device at an XR.XRNode in the XR input subsystem.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.HapticCapabilities.bufferFrequencyHz">
+      <summary>
+        <para>The frequency (in Hz) that this device plays back buffered haptic data.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.HapticCapabilities.numChannels">
+      <summary>
+        <para>The number of channels that this device plays back haptic data.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.HapticCapabilities.supportsBuffer">
+      <summary>
+        <para>True if this device supports sending a haptic buffer.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.HapticCapabilities.supportsImpulse">
+      <summary>
+        <para>True if this device supports sending a haptic impulse.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.InputDevice">
+      <summary>
+        <para>Defines an input device in the XR input subsystem.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.InputDevice.IsValid">
+      <summary>
+        <para>true if the device is currently a valid input device; otherwise false.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.InputDevice.SendHapticBuffer(System.UInt32,System.Byte[])">
+      <summary>
+        <para>Sends a raw buffer of haptic data to the device.</para>
+      </summary>
+      <param name="channel">The channel to receive the data.</param>
+      <param name="buffer">A raw byte buffer that contains the haptic data to send to the device.</param>
+      <returns>
+        <para>true if successful; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputDevice.SendHapticImpulse(System.UInt32,System.Single,System.Single)">
+      <summary>
+        <para>Sends a haptic impulse to a device.</para>
+      </summary>
+      <param name="channel">The channel to receive the impulse.</param>
+      <param name="amplitude">The normalized (0.0 to 1.0) amplitude value of the haptic impulse to play on the device.</param>
+      <param name="duration">The duration in seconds that the haptic impulse will play. Only supported on Oculus.</param>
+      <returns>
+        <para>true if successful; otherwise false.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputDevice.StopHaptics">
+      <summary>
+        <para>Stop all haptic playback for a device.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.InputDevice.TryGetHapticCapabilities(UnityEngine.XR.HapticCapabilities&amp;)">
+      <summary>
+        <para>Gets the haptic capabilities of the device.</para>
+      </summary>
+      <param name="capabilities">A HapticCapabilities struct to receive the capabilities of this device.</param>
+      <returns>
+        <para>true if device can be queried, false otherwise.</para>
+      </returns>
+    </member>
+    <member name="T:UnityEngine.XR.InputDevices">
+      <summary>
+        <para>An interface for accessing devices in the XR input subsytem.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode)">
+      <summary>
+        <para>Gets the input device at a given XR.XRNode endpoint.</para>
+      </summary>
+      <param name="node">The XRNode that owns the requested device.</param>
+      <returns>
+        <para>An XR.InputDevice at this [[XR.XRNode].</para>
+      </returns>
+    </member>
     <member name="T:UnityEngine.XR.InputTracking">
       <summary>
         <para>A collection of methods and properties for interacting with the XR tracking system.</para>
@@ -788,6 +1108,7 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
         <para>Accepts the unique identifier for a tracked node and returns a friendly name for it.</para>
       </summary>
       <param name="uniqueID">The unique identifier for the Node index.</param>
+      <param name="uniqueId"></param>
       <returns>
         <para>The name of the tracked node if the given 64-bit identifier maps to a currently tracked node. Empty string otherwise.</para>
       </returns>
@@ -805,7 +1126,7 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
     </member>
     <member name="T:UnityEngine.XR.XRNode">
       <summary>
-        <para>Enumeration of tracked XR nodes which can be updated by XR input.</para>
+        <para>Enumeration of XR nodes which can be updated by XR input or sent haptic data.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.XR.XRNode.CenterEye">

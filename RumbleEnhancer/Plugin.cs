@@ -2,12 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine;
-using CustomUI;
-using CustomUI.GameplaySettings;
 using CustomUI.Settings;
-using CustomUI.MenuButton;
-using CustomUI.Utilities;
-using System;
 
 namespace RumbleEnhancer
 {
@@ -16,17 +11,15 @@ namespace RumbleEnhancer
 		public const string PluginName = "RumbleEnhancer";
 
 		public string Name => PluginName;
-		public string Version => "1.2.0";
-
-        bool toggleValue = false;
-
+		public string Version => "1.3.0";
+        
         private readonly string[] GameplaySceneNames = { "Menu", "GameCore" };
 
 		public void OnApplicationStart()
 		{
 			SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
 			SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-            Console.WriteLine("[RumbleEnhancer] Plugin loaded");
+            Log("Verion " + Version + " loaded");
 		}
 
 		private void SceneManagerOnActiveSceneChanged(Scene fromScene, Scene toScene)
@@ -64,7 +57,7 @@ namespace RumbleEnhancer
                 IntViewController rumblePause = settingsSubmenu.AddInt("Rumble Interval\t(in ms)", 0, 250, 1);
                 rumblePause.GetValue += delegate { return ModPrefs.GetInt(Name, "TimeBetweenRumblePulsesMS", 5, true); };
                 rumblePause.SetValue += delegate (int value) { ModPrefs.SetInt(Name, "TimeBetweenRumblePulsesMS", value); };
-
+                
             }
         }
 
@@ -102,5 +95,10 @@ namespace RumbleEnhancer
 				return Mathf.Clamp(Strength, 0.0f, 1.0f);
 			}
 		}
+
+        private void Log(string msg)
+        {
+            BS_Utils.Utilities.Logger.Log("RumbleEnhancer", msg);
+        }
 	}
 }
