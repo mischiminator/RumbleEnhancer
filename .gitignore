@@ -34,3 +34,19 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+RumbleEnhancer/bin/*/Assembly-CSharp-firstpass.dll
+
+RumbleEnhancer/bin/*/Assembly-CSharp.dll
+
+RumbleEnhancer/bin/*/BeatSaberCustomUI.dll
+
+RumbleEnhancer/bin/*/Oculus.VR.dll
+
+RumbleEnhancer/bin/*/Ookii.Dialogs.dll
+
+RumbleEnhancer/bin/*/Polyglot.Scripts.dll
+
+RumbleEnhancer/bin/*/Unity*
+
+RumbleEnhancer/bin/*/Zenject*

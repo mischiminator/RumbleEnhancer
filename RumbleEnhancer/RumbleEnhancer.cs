@@ -8,7 +8,7 @@ using UnityEngine.XR;
 
 namespace Rumbleenhancer
 {
-    class RumbleEnhancer
+    class RumbleEnhancer : MonoBehaviour
     {
         private const float SearchTimeout = 5000.0f;
 

@@ -48,6 +48,7 @@ namespace Rumbleenhancer
 
             GameObject RumbleObject = new GameObject("Rumble Enhancer");
             RumbleObject.AddComponent(typeof(RumbleEnhancer));
+            Logger.log.Info("GameObject attached!");
         }
 
         private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -69,6 +70,7 @@ namespace Rumbleenhancer
                 rumblePause.GetValue += delegate { return ModPrefs.GetInt(config.Value.plugin_name, "TimeBetweenRumblePulsesMS", 5, true); };
                 rumblePause.SetValue += delegate (int value) { ModPrefs.SetInt(config.Value.plugin_name, "TimeBetweenRumblePulsesMS", value); };
 
+                Logger.log.Info("Settings attached!");
             }
         }
 
