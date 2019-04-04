@@ -1,81 +1,85 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine.XR;
 
-namespace RumbleEnhancer
+namespace Rumbleenhancer
 {
-	public class RumblingHand
-	{
-		private XRNode RumbleHand;
-		private float RumbleStrength;
-		private int RumbleTimeMS;
-		private int TimeBetweenRumblePulsesMS;
+    class RumblingHand
+    {
+        private XRNode RumbleHand;
+        private float RumbleStrength;
+        private int RumbleTimeMS;
+        private int TimeBetweenRumblePulsesMS;
 
-		private bool RumbleActive;
-		private int PassedRumbleTimeMS;
+        private bool RumbleActive;
+        private int PassedRumbleTimeMS;
 
-		private object LockObject;
+        private object LockObject;
 
-		public RumblingHand(XRNode RumbleHand, float RumbleStrength, int RumbleTimeMS, int TimeBetweenRumblePulsesMS)
-		{
-			this.RumbleHand = RumbleHand;
-			this.RumbleStrength = RumbleStrength;
-			this.RumbleTimeMS = RumbleTimeMS;
-			this.TimeBetweenRumblePulsesMS = TimeBetweenRumblePulsesMS;
+        public RumblingHand(XRNode RumbleHand, float RumbleStrength, int RumbleTimeMS, int TimeBetweenRumblePulsesMS)
+        {
+            this.RumbleHand = RumbleHand;
+            this.RumbleStrength = RumbleStrength;
+            this.RumbleTimeMS = RumbleTimeMS;
+            this.TimeBetweenRumblePulsesMS = TimeBetweenRumblePulsesMS;
 
-			LockObject = new object();
+            LockObject = new object();
 
-			StopRumble();
-		}
+            StopRumble();
+        }
 
-		public void ResetTime()
-		{
-			PassedRumbleTimeMS = 0;
-		}
+        public void ResetTime()
+        {
+            PassedRumbleTimeMS = 0;
+        }
 
-		public void StopRumble()
-		{
-			RumbleActive = false;
-			ResetTime();
-		}
+        public void StopRumble()
+        {
+            RumbleActive = false;
+            ResetTime();
+        }
 
-		public void Rumble()
-		{
-			if (RumbleTimeMS == 0 || RumbleStrength == 0)
-			{
-				return;
-			}
+        public void Rumble()
+        {
+            if (RumbleTimeMS == 0 || RumbleStrength == 0)
+            {
+                return;
+            }
 
-			lock (LockObject)
-			{
-				if (RumbleActive)
-				{
-					ResetTime();
-					return;
-				}
-			}
+            lock (LockObject)
+            {
+                if (RumbleActive)
+                {
+                    ResetTime();
+                    return;
+                }
+            }
 
-			RumbleActive = true;
+            RumbleActive = true;
 
-			Task.Run(() =>
-			{
-				while (true)
-				{
-					lock (LockObject)
-					{
-						if (!RumbleActive || PassedRumbleTimeMS >= RumbleTimeMS)
-						{
-							StopRumble();
-							break;
-						}
-					}
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    lock (LockObject)
+                    {
+                        if (!RumbleActive || PassedRumbleTimeMS >= RumbleTimeMS)
+                        {
+                            StopRumble();
+                            break;
+                        }
+                    }
 
-					VRPlatformHelper.instance.TriggerHapticPulse(RumbleHand, RumbleStrength);
-					Thread.Sleep(TimeBetweenRumblePulsesMS);
+                    VRPlatformHelper.instance.TriggerHapticPulse(RumbleHand, RumbleStrength);
+                    Thread.Sleep(TimeBetweenRumblePulsesMS);
 
-					PassedRumbleTimeMS += TimeBetweenRumblePulsesMS;
-				}
-			});
-		}
-	}
+                    PassedRumbleTimeMS += TimeBetweenRumblePulsesMS;
+                }
+            });
+        }
+    }
 }
