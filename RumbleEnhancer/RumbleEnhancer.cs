@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.XR;
+using IPALogger = IPA.Logging.Logger;
 
 namespace Rumbleenhancer
 {
@@ -38,13 +39,13 @@ namespace Rumbleenhancer
 
             if (HapticFeedbackController == null)
             {
-                Console.WriteLine("Haptic feedback not found");
+                Logger.log.Error("Haptic Feedback Controller not found!");
                 yield break;
             }
 
             if (NoteCutEffectSpawner == null)
             {
-                Console.WriteLine("Note cut spawner not found");
+                Logger.log.Error("Note Cut Spawner not found!");
                 yield break;
             }
 
@@ -53,7 +54,7 @@ namespace Rumbleenhancer
 
             if (BeatmapObjectSpawnController == null)
             {
-                Console.WriteLine("Beatmap object spawner not found");
+                Logger.log.Error("Beatmap object spawner not found");
                 yield break;
             }
 
