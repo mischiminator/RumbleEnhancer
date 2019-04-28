@@ -12,11 +12,12 @@ namespace Rumbleenhancer
 {
     public class Plugin : IBeatSaberPlugin
     {
+        public static object asyncRumbleLock = new object();
+
         internal static Ref<PluginConfig> config;
         internal static IConfigProvider configProvider;
 
         private readonly string[] GameplaySceneNames = { "MenuCore", "GameCore" };
-
 
         public void Init(IPALogger logger, [Config.Prefer("json")] IConfigProvider cfgProvider)
         {
@@ -36,7 +37,7 @@ namespace Rumbleenhancer
             SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
             SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
-            Logger.log.Info("Plugin Version 1.4.0 loaded!");
+            Logger.log.Info("Plugin Version 1.4.2 loaded!");
         }
 
         private void SceneManagerOnActiveSceneChanged(Scene fromScene, Scene toScene)

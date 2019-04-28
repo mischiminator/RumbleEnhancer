@@ -74,7 +74,11 @@ namespace Rumbleenhancer
                         }
                     }
 
-                    VRPlatformHelper.instance.TriggerHapticPulse(RumbleHand, RumbleStrength);
+                    lock (Plugin.asyncRumbleLock)
+                    {
+                        VRPlatformHelper.instance.TriggerHapticPulse(RumbleHand, RumbleStrength);
+                    }
+
                     Thread.Sleep(TimeBetweenRumblePulsesMS);
 
                     PassedRumbleTimeMS += TimeBetweenRumblePulsesMS;
