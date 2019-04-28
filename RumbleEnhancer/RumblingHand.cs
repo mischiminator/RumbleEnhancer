@@ -61,7 +61,7 @@ namespace Rumbleenhancer
 
             RumbleActive = true;
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 while (true)
                 {
@@ -74,8 +74,12 @@ namespace Rumbleenhancer
                         }
                     }
 
-                    VRPlatformHelper.instance.TriggerHapticPulse(RumbleHand, RumbleStrength);
-                    Thread.Sleep(TimeBetweenRumblePulsesMS);
+                    lock (Plugin.asyncRumbleLock)
+                    {
+                        VRPlatformHelper.instance.TriggerHapticPulse(RumbleHand, RumbleStrength);
+                    }
+
+                    await Task.Delay(TimeBetweenRumblePulsesMS);
 
                     PassedRumbleTimeMS += TimeBetweenRumblePulsesMS;
                 }
