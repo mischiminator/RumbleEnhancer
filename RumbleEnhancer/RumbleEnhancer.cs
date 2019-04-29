@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.XR;
-using IPALogger = IPA.Logging.Logger;
 
 namespace Rumbleenhancer
 {

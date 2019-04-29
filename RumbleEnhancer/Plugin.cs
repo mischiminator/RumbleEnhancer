@@ -16,9 +16,7 @@ namespace Rumbleenhancer
 
         internal static Ref<PluginConfig> config;
         internal static IConfigProvider configProvider;
-
-        private readonly string[] GameplaySceneNames = { "MenuCore", "GameCore" };
-
+        
         public void Init(IPALogger logger, [Config.Prefer("json")] IConfigProvider cfgProvider)
         {
             Logger.log = logger;
@@ -42,7 +40,7 @@ namespace Rumbleenhancer
 
         private void SceneManagerOnActiveSceneChanged(Scene fromScene, Scene toScene)
         {
-            if (!GameplaySceneNames.Contains(toScene.name))
+            if (toScene.name != "GameCore")
             {
                 return;
             }
@@ -59,17 +57,17 @@ namespace Rumbleenhancer
                 SubMenu settingsSubmenu = SettingsUI.CreateSubMenu("Rumble Enhancer");
 
                 IntViewController rumbleStrength = settingsSubmenu.AddInt("Rumble Strength", 0, 10, 1);
-                rumbleStrength.GetValue += delegate { return ModPrefs.GetInt(config.Value.plugin_name, "RumbleStrength", 1, true); };
-                rumbleStrength.SetValue += delegate (int value) { ModPrefs.SetInt(config.Value.plugin_name, "RumbleStrength", value); };
+                rumbleStrength.GetValue += delegate { return config.Value.RumbleStrength; };
+                rumbleStrength.SetValue += delegate (int value) { config.Value.RumbleStrength = value ; };
 
                 IntViewController rumbleTime = settingsSubmenu.AddInt("Rumble Length\t\t(in ms)", 0, 250, 5);
-                rumbleTime.GetValue += delegate { return ModPrefs.GetInt(config.Value.plugin_name, "RumbleTimeMS", 25, true); };
-                rumbleTime.SetValue += delegate (int value) { ModPrefs.SetInt(config.Value.plugin_name, "RumbleTimeMS", value); };
+                rumbleTime.GetValue += delegate { return config.Value.RumbleTimeMS; };
+                rumbleTime.SetValue += delegate (int value) { config.Value.RumbleTimeMS = value; };
 
 
                 IntViewController rumblePause = settingsSubmenu.AddInt("Rumble Interval\t(in ms)", 0, 250, 1);
-                rumblePause.GetValue += delegate { return ModPrefs.GetInt(config.Value.plugin_name, "TimeBetweenRumblePulsesMS", 5, true); };
-                rumblePause.SetValue += delegate (int value) { ModPrefs.SetInt(config.Value.plugin_name, "TimeBetweenRumblePulsesMS", value); };
+                rumblePause.GetValue += delegate { return config.Value.TimeBetweenRumblePulsesMS; };
+                rumblePause.SetValue += delegate (int value) { config.Value.TimeBetweenRumblePulsesMS = value; };
 
                 Logger.log.Info("Settings attached!");
             }
@@ -93,7 +91,7 @@ namespace Rumbleenhancer
         {
             get
             {
-                int Time = ModPrefs.GetInt(config.Value.plugin_name, "RumbleTimeMS", 25, true);
+                int Time = config.Value.RumbleTimeMS;
                 return Mathf.Clamp(Time, 0, Time);
             }
         }
@@ -102,7 +100,7 @@ namespace Rumbleenhancer
         {
             get
             {
-                int Time = ModPrefs.GetInt(config.Value.plugin_name, "TimeBetweenRumblePulsesMS", 5, true);
+                int Time = config.Value.TimeBetweenRumblePulsesMS;
                 return Mathf.Clamp(Time, 5, Time);
             }
         }
@@ -111,7 +109,7 @@ namespace Rumbleenhancer
         {
             get
             {
-                float Strength = ModPrefs.GetFloat(config.Value.plugin_name, "RumbleStrength", 1.0f, true);
+                float Strength = config.Value.RumbleStrength * 0.1f;
                 return Mathf.Clamp(Strength, 0.0f, 1.0f);
             }
         }
