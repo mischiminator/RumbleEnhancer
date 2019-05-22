@@ -22,7 +22,7 @@ namespace Rumbleenhancer
             Logger.log = logger;
             configProvider = cfgProvider;
 
-            config = cfgProvider.MakeLink<PluginConfig>((p, v) =>
+            config = configProvider.MakeLink<PluginConfig>((p, v) =>
             {
                 if (v.Value == null || v.Value.RegenerateConfig)
                     p.Store(v.Value = new PluginConfig() { RegenerateConfig = false });
@@ -32,13 +32,13 @@ namespace Rumbleenhancer
 
         public void OnApplicationStart()
         {
-            SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
-            SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            SceneManager.activeSceneChanged += OnActiveSceneChanged;
+            SceneManager.sceneLoaded += OnSceneLoaded;
 
-            Logger.log.Info("Plugin Version 1.4.2 loaded!");
+            Logger.log.Info("Plugin Version 1.4.3 loaded!");
         }
 
-        private void SceneManagerOnActiveSceneChanged(Scene fromScene, Scene toScene)
+        public void OnActiveSceneChanged(Scene fromScene, Scene toScene)
         {
             if (toScene.name != "GameCore")
             {
@@ -50,9 +50,9 @@ namespace Rumbleenhancer
             Logger.log.Info("GameObject attached!");
         }
 
-        private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+        public void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
         {
-            if (arg0.name == "MenuCore")
+            if (scene.name == "MenuCore")
             {
                 SubMenu settingsSubmenu = SettingsUI.CreateSubMenu("Rumble Enhancer");
 
@@ -75,16 +75,14 @@ namespace Rumbleenhancer
 
         public void OnApplicationQuit()
         {
-            SceneManager.activeSceneChanged -= SceneManagerOnActiveSceneChanged;
-            SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+            SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             Logger.log.Info("Plugin unloaded!");
 
         }
 
         public void OnFixedUpdate(){}
         public void OnUpdate(){}
-        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene){}
-        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode){}
         public void OnSceneUnloaded(Scene scene){}
 
         public static int RumbleTimeMS
