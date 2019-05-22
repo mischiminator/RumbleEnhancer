@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.XR; 
+using UnityEngine.XR;
 
 namespace Rumbleenhancer
 {
@@ -20,9 +20,10 @@ namespace Rumbleenhancer
 
         private void Awake()
         {
-            float RumbleStrength = Plugin.RumbleStrength;
-            int RumbleTimeMS = Plugin.RumbleTimeMS;
-            int TimeBetweenRumblePulsesMS = Plugin.TimeBetweenRumblePulsesMS;
+            Settings s = new Settings();
+            float RumbleStrength = s.RumbleStrength;
+            int RumbleTimeMS = s.RumbleTimeMS;
+            int TimeBetweenRumblePulsesMS = s.TimeBetweenRumblePulsesMS;
 
             RumblingHands = new Dictionary<Saber.SaberType, RumblingHand>
         {

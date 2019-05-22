@@ -23,6 +23,7 @@ namespace Rumbleenhancer
             this.RumbleTimeMS = RumbleTimeMS;
             this.TimeBetweenRumblePulsesMS = TimeBetweenRumblePulsesMS;
 
+
             LockObject = new object();
 
             StopRumble();
