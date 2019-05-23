@@ -8,8 +8,8 @@ namespace Rumbleenhancer
     class Settings
     {
         private int rumbleStrength = 1;
-        private int rumbleTimeMS = 25;
-        private int timeBetweenPulsesMS = 5;
+        private int rumbleTimeMS = 130;
+        private int timeBetweenPulsesMS = 13;
 
         private JToken jt;
 
@@ -26,44 +26,34 @@ namespace Rumbleenhancer
                 string[] content =
                 {
                     "{",
-                    "  RumbleStrength: 10,",
-                    "  RumbleTimeMS: 25,",
-                    "  TimeBetweenRumblePulsesMS: 5",
+                    "  RumbleTimeMS: 130,",
+                    "  TimeBetweenRumblePulsesMS: 13",
                     "}"
                 };
                 File.WriteAllLines(path, content);
             }
-            try
-            {
-                jt = JToken.Parse(File.ReadAllText(path));
-            }catch(Exception e)
-            {
-                Logger.log.Error(e.Message);
-            }
-            
-            rumbleStrength = Convert.ToInt32(jt["RumbleStrength"].ToString());
+
+            jt = JToken.Parse(File.ReadAllText(path));
+
+            if (jt["RumbleStrenth"] != null)
+                File.Delete(path);
+
             rumbleTimeMS = Convert.ToInt32(jt["RumbleTimeMS"].ToString());
             timeBetweenPulsesMS = Convert.ToInt32(jt["TimeBetweenRumblePulsesMS"].ToString());
-            
+
         }
 
         public void SaveSettings()
         {
-            try
-            {
-                string[] content =
-                    {
+            string[] content =
+                {
                     "{",
-                    "  RumbleStrength: "+rumbleStrength+",",
                     "  RumbleTimeMS: "+rumbleTimeMS+",",
                     "  TimeBetweenRumblePulsesMS: "+timeBetweenPulsesMS,
                     "}"
                 };
-                File.WriteAllLines(path, content);
-            } catch(Exception e)
-            {
-                Logger.log.Error(e.Message);
-            }
+            File.WriteAllLines(path, content);
+
             Plugin.settingsattached = false;
         }
 
@@ -71,31 +61,23 @@ namespace Rumbleenhancer
         {
             get
             {
-                float ret = rumbleStrength * 0.1f;
-                return Mathf.Clamp(ret, 0.0f, 1.0f);
+                return rumbleStrength;
             }
             set
             {
-                Logger.log.Info("RS set:" + value);
                 rumbleStrength = (int)value;
                 Plugin.save = true;
             }
         }
-
-        public int RumbleStrengthSettings()
-        {
-            return rumbleStrength;
-        }
-
+        
         public int RumbleTimeMS
         {
             get
             {
                 return Mathf.Clamp(rumbleTimeMS, 0, rumbleTimeMS);
-            } 
+            }
             set
             {
-                Logger.log.Info("RT set:" + value);
                 rumbleTimeMS = value;
                 Plugin.save = true;
             }
@@ -109,7 +91,6 @@ namespace Rumbleenhancer
             }
             set
             {
-                Logger.log.Info("RP set:" + value);
                 timeBetweenPulsesMS = value;
                 Plugin.save = true;
             }

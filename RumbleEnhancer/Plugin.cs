@@ -1,9 +1,11 @@
 ﻿using CustomUI.Settings;
+using Harmony;
 using IPA;
+using IPALogger = IPA.Logging.Logger;
 using System;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using IPALogger = IPA.Logging.Logger;
 
 namespace Rumbleenhancer
 
@@ -18,6 +20,10 @@ namespace Rumbleenhancer
 
         public void Init(IPALogger logger)
         {
+
+            var harmony = HarmonyInstance.Create("com.kariko.BeatSaber.RumbleEnhancer");
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
+
             Logger.log = logger;
             try
             {
@@ -27,6 +33,7 @@ namespace Rumbleenhancer
             {
                 logger.Info(e.Message);
             }
+
         }
 
         public void OnApplicationStart()
@@ -57,20 +64,20 @@ namespace Rumbleenhancer
                 settings.SaveSettings();
                 save = false;
             }
-            //Logger.log.Info("\"" + scene.name + "\" loaded");
+
             if (scene.name == "MenuCore" && !settingsattached)
             {
                 SubMenu settingsSubmenu = SettingsUI.CreateSubMenu("Rumble Enhancer");
 
-                IntViewController rumbleStrength = settingsSubmenu.AddInt("Rumble Strength", 0, 10, 1);
-                rumbleStrength.GetValue += delegate { return settings.RumbleStrengthSettings(); };
-                rumbleStrength.SetValue += delegate (int value) { settings.RumbleStrength = value; };
+                string hint = "Duration of Rumble Effect";
 
-                IntViewController rumbleTime = settingsSubmenu.AddInt("Rumble Length\t\t(in ms)", 0, 250, 5);
+                IntViewController rumbleTime = settingsSubmenu.AddInt("Rumble Length\t\t(in ms)", hint, 0, 250, 5);
                 rumbleTime.GetValue += delegate { return settings.RumbleTimeMS; };
                 rumbleTime.SetValue += delegate (int value) { settings.RumbleTimeMS = value; };
 
-                IntViewController rumblePause = settingsSubmenu.AddInt("Rumble Interval\t(in ms)", 5, 250, 1);
+                hint = "The Pause between single pulses,\n the lower this is the stronger the rumble will feel";
+
+                IntViewController rumblePause = settingsSubmenu.AddInt("Rumble Interval\t(in ms)", hint, 0, 30, 1);
                 rumblePause.GetValue += delegate { return settings.TimeBetweenRumblePulsesMS; };
                 rumblePause.SetValue += delegate (int value) { settings.TimeBetweenRumblePulsesMS = value; };
 
@@ -92,11 +99,10 @@ namespace Rumbleenhancer
         public void OnUpdate() { }
         public void OnSceneUnloaded(Scene scene)
         {
-            //Logger.log.Info("\"" + scene.name + "\" unloaded");
             if (scene.name == "MenuCore" && save)
             {
                 save = false;
-                //settings.SaveSettings();
+                settings.SaveSettings();
             }
         }
 

@@ -82,6 +82,7 @@ namespace Rumbleenhancer
             }
 
             RumblingHands[NoteCutInfo.saberType].Rumble();
+            return;
         }
 
         private IEnumerator FindComponentInBeatSaber<T>(float TimeOut, Action<T> OnComplete) where T : UnityEngine.Object
