@@ -72,6 +72,8 @@ namespace Rumbleenhancer
             {
                 RumblingHand.StopRumble();
             }
+
+            Logger.log.Info("GameObject destroyed!");
         }
 
         private void BeatmapObjectSpawnController_noteWasCutEvent(BeatmapObjectSpawnController NoteSpawnController, NoteController NoteController, NoteCutInfo NoteCutInfo)

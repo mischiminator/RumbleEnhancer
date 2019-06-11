@@ -46,14 +46,11 @@ namespace Rumbleenhancer
 
         public void OnActiveSceneChanged(Scene fromScene, Scene toScene)
         {
-            if (toScene.name != "GameCore")
+            if (toScene.name == "GameCore")
             {
-                return;
+                GameObject RumbleObject = new GameObject("Rumble Enhancer");
+                RumbleObject.AddComponent(typeof(RumbleEnhancer));
             }
-
-            GameObject RumbleObject = new GameObject("Rumble Enhancer");
-            RumbleObject.AddComponent(typeof(RumbleEnhancer));
-            Logger.log.Info("GameObject attached!");
         }
 
         public void OnSceneLoaded(Scene scene, LoadSceneMode arg1)

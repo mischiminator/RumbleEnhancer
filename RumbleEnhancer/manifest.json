@@ -2,10 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
   "author": "Kariko",
   "description": "A mod to change rumble behavior.",
-  "gameVersion": "1.0.0",
+  "gameVersion": "1.1.0",
   "id": "rumbleenhancer",
   "name": "Rumble Enhancer",
-	"version": "1.4.3",
+	"version": "1.4.4",
   "features": [
   ]
 }
